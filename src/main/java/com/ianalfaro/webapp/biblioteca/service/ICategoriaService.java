@@ -8,7 +8,7 @@ public interface ICategoriaService {
 
     public List<Categoria> listarCategorias();
 
-    public void guardarCategoria(Categoria categoria);
+    public Categoria guardarCategoria(Categoria categoria);
 
     public Categoria buscarCategoriaPorId(Long id);
 
