@@ -9,32 +9,31 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ianalfaro.webapp.biblioteca.service.ClienteService;
-import com.ianalfaro.webapp.biblioteca.model.Categoria;
 import com.ianalfaro.webapp.biblioteca.model.Cliente;
 
 @Controller
 @RestController
-@RequestMapping("cliente")
+@RequestMapping("")
 public class ClienteController {
 
     @Autowired
     ClienteService clienteService;
 
-    @GetMapping("/")
+    @GetMapping("/clientes")
     public List<Cliente> listarClientes(){
         return clienteService.listarClientes();
     }
 
-    @GetMapping("/{dpi}")
-    public ResponseEntity<Cliente> buscarClientePorDpi(@PathVariable Long dpi){
+    @GetMapping("/cliente")
+    public ResponseEntity<Cliente> buscarClientePorDpi(@RequestParam Long dpi){
         try {
             Cliente cliente = clienteService.buscarClientePorDpi(dpi);
             return ResponseEntity.ok(cliente);
@@ -43,7 +42,7 @@ public class ClienteController {
         }
     }
 
-    @PostMapping("/")
+    @PostMapping("/cliente")
     public ResponseEntity<Map<String, String>> agregarCliente(@RequestBody Cliente cliente){
         Map<String, String> response = new HashMap<>();
         try {
@@ -57,8 +56,8 @@ public class ClienteController {
         }
     }
 
-    @PutMapping("/{dpi}")
-    public ResponseEntity<Map<String, String>> editarCliente(@PathVariable Long dpi, @RequestBody Cliente clienteNuevo){
+    @PutMapping("/cliente")
+    public ResponseEntity<Map<String, String>> editarCliente(@RequestParam Long dpi, @RequestBody Cliente clienteNuevo){
         Map<String, String> response = new HashMap<>();
         try {
             Cliente cliente = clienteService.buscarClientePorDpi(dpi);
@@ -75,8 +74,8 @@ public class ClienteController {
         }
     }
 
-    @DeleteMapping("/{dpi}")
-    public ResponseEntity<Map<String, String>> eliminarCliente(@PathVariable Long dpi){
+    @DeleteMapping("/cliente")
+    public ResponseEntity<Map<String, String>> eliminarCliente(@RequestParam Long dpi){
         Map<String, String> response = new HashMap<>();
         try {
             Cliente cliente = clienteService.buscarClientePorDpi(dpi);
