@@ -46,9 +46,15 @@ public class EmpleadoController {
     public ResponseEntity<Map<String, String>> agregarEmpleado(@RequestBody Empleado empleado){
         Map<String, String> response = new HashMap<>();
         try {
-            empleadoService.guardarEmpleado(empleado);
-            response.put("message", "¡¡Empleado creado con éxito :D!!");
-            return ResponseEntity.ok(response);
+            if(!empleadoService.verificarDpiDuplicado(empleado)){
+                empleadoService.guardarEmpleado(empleado);
+                response.put("message", "¡¡Empleado creado con éxito :D!!");
+                return ResponseEntity.ok(response);
+            }else{
+                response.put("message", "Error");
+                response.put("err", "El dpi se encuentra duplicado");
+                return ResponseEntity.badRequest().body(response);
+            }
         } catch (Exception e) {
             response.put("message", "Error");
             response.put("err", "Hubo un error al crear el empleado");
@@ -66,9 +72,15 @@ public class EmpleadoController {
             empleado.setTelefono(empleadoNuevo.getTelefono());
             empleado.setDireccion(empleadoNuevo.getDireccion());
             empleado.setDpi(empleadoNuevo.getDpi());
-            empleadoService.guardarEmpleado(empleado);
-            response.put("message", "¡¡Empleado modificado con éxito :D!!");
-            return ResponseEntity.ok(response);
+            if(!empleadoService.verificarDpiDuplicado(empleado)){
+                empleadoService.guardarEmpleado(empleado);
+                response.put("message", "¡¡Empleado modificado con éxito :D!!");
+                return ResponseEntity.ok(response);
+            }else{
+                response.put("message", "Error");
+                response.put("err", "El dpi se encuentra duplicado");
+                return ResponseEntity.badRequest().body(response);
+            }
         } catch (Exception e) {
             response.put("message", "Error");
             response.put("err", "Hubo un error al modificar el empleado");
