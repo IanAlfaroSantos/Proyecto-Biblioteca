@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import com.ianalfaro.webapp.biblioteca.service.PrestamoService;
 @Controller
 @RestController
 @RequestMapping("")
+@CrossOrigin(value="http://localhost:5500")
 public class PrestamoController {
 
     @Autowired
@@ -72,6 +74,7 @@ public class PrestamoController {
             prestamo.setVigencia(prestamoNuevo.getVigencia());
             prestamo.setEmpleado(prestamoNuevo.getEmpleado());
             prestamo.setCliente(prestamoNuevo.getCliente());
+            prestamo.setLibros(prestamoNuevo.getLibros());
             prestamoService.guardarPrestamo(prestamo);
             response.put("message", "!!Prestamo modificado con éxito :D¡¡");
             return ResponseEntity.ok(response);
